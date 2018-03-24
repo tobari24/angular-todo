@@ -1,0 +1,43 @@
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Task } from '../model/task';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from './core/auth.service';
+import { User } from '../model/user';
+
+@Injectable()
+export class FireStoreService {
+
+  tasksCollection: AngularFirestoreCollection<Task>;
+  tasks$: Observable<Task[]>;
+  taskDoc: AngularFirestoreDocument<Task>;
+  sample: AngularFirestoreCollection<Task>;
+  user: User;
+
+  constructor(
+    private afs: AngularFirestore,
+    private authService: AuthService
+  ) {
+    this.tasksCollection = afs.collection<Task>('tasks');
+    this.tasks$ = this.tasksCollection.snapshotChanges().map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Task;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    });
+  }
+
+  getTasks(): Observable<Task[]> {
+    return this.tasks$;
+  }
+
+  addTask(task: Task): void {
+    this.tasksCollection.add(task);
+  }
+
+  deleteTask(task: Task): void {
+    this.taskDoc = this.afs.doc(`tasks/${task.id}`);
+    this.taskDoc.delete();
+  }
+}

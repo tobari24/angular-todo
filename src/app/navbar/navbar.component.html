@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/">
+        <mat-icon>settings</mat-icon>settings
+      </button>
+        <a mat-menu-item routerLink="/">
+          <mat-icon>done</mat-icon>done
+        </a>
+      <button mat-menu-item (click)="logOut()">
+        <mat-icon>exit_to_app</mat-icon>logout
+      </button>
+    </mat-menu>
+    <span class="fill-remaining-space"></span>
+    <span>Todo App</span>
+    <span class="fill-remaining-space"></span>
+    <div *ngIf="user | async as user">
+      {{ user?.displayName[0] }}
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
