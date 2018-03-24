@@ -7,7 +7,7 @@
 /out-tsc
 
 # enviroments
-/src/enviroments
+/src/enviroments/*
 
 # dependencies
 /node_modules
