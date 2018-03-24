@@ -35,6 +35,12 @@ export class TodoComponent implements OnInit {
     this.tasks$ = this.fs.getTasks();
   }
 
+
+  onClickCheckbox(task: Task) {
+    console.log(`checkbox clicked: ${task.checkbox}`);
+    task.checkbox = !task.checkbox;
+    this.fs.updateTask(task);
+  }
   openSnackBar(task: Task) {
     task.isDelete = true;
     this.fs.updateTask(task);

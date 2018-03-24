@@ -7,8 +7,8 @@
       <!--<mat-card-subtitle *ngIf="task.memo">
         {{ task.memo }}
       </mat-card-subtitle>-->
-      <mat-card-content>
-        <mat-checkbox>{{ task.memo }}</mat-checkbox>
+      <mat-card-content [style.text-decoration]="task.checkbox ? 'line-through':'none'">
+        <mat-checkbox [checked]="task.checkbox" (click)="onClickCheckbox(task)">{{ task.memo }}</mat-checkbox>
       </mat-card-content>
       <mat-card-actions class="card-content-actions">
           <button mat-button (click)="openSnackBar(task)"><mat-icon>delete</mat-icon></button>
